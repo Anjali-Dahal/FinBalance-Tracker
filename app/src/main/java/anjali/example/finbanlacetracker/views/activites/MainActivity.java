@@ -33,10 +33,12 @@ import java.util.Calendar;
 
 import anjali.example.finbanlacetracker.R;
 import anjali.example.finbanlacetracker.databinding.ActivityMainBinding;
+import anjali.example.finbanlacetracker.databinding.FragmentTransactionsBinding;
 import anjali.example.finbanlacetracker.models.Transaction;
 import anjali.example.finbanlacetracker.utils.Constants;
 import anjali.example.finbanlacetracker.utils.Helper;
 import anjali.example.finbanlacetracker.viewmodels.MainViewModel;
+import anjali.example.finbanlacetracker.views.fragments.SearchResultFragment;
 import anjali.example.finbanlacetracker.views.fragments.StatsFragment;
 import anjali.example.finbanlacetracker.views.fragments.TransactionsFragment;
 import io.realm.RealmResults;
@@ -45,9 +47,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-
     ActivityMainBinding binding;
-
     Calendar calendar;
     /*
     0 = Daily
@@ -56,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
     3 = Summary
     4 = Notes
      */
-
-
-
    public MainViewModel viewModel;
 
     @Override
@@ -93,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        Log.d("INTENT", this.getIntent().getAction());
         handlelIntent(this.getIntent());
-
     }
 
     @Override
@@ -127,12 +122,15 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                RealmResults<Transaction> searchedTransactions = viewModel.findTransactions(query);
-                Log.d("Transactions", searchedTransactions.size() + "");
-                for ( Transaction transaction : searchedTransactions ) {
-                    Log.d("Transaction Type", transaction.getCategory());
-                    Toast.makeText(binding.content.getContext(), "Transaction : " + transaction.getType(), Toast.LENGTH_SHORT);
-                }
+                Bundle bundle = new Bundle();
+                bundle.putString("query", query);
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().addToBackStack("search");
+                SearchResultFragment searchResultFragment = new SearchResultFragment();
+                searchResultFragment.setArguments(bundle);
+                transaction.replace(R.id.content, searchResultFragment);
+                transaction.commit();
+
                 return true;
             }
 

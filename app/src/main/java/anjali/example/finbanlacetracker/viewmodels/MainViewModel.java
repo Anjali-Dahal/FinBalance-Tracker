@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import anjali.example.finbanlacetracker.models.Transaction;
+import anjali.example.finbanlacetracker.models.User;
 import anjali.example.finbanlacetracker.utils.Constants;
 import io.realm.Case;
 import io.realm.Realm;
@@ -175,6 +176,16 @@ public class MainViewModel extends AndroidViewModel {
         realm.copyToRealmOrUpdate(transaction);
         // some code here
         realm.commitTransaction();
+    }
+
+    public void addUser(User user) {
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(user);
+        realm.commitTransaction();
+    }
+
+    public User getUser(String email) {
+        return realm.where(User.class).equalTo("email", email).findFirst();
     }
 
     public void deleteTransaction(Transaction transaction) {

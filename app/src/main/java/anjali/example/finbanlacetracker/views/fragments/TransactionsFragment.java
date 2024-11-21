@@ -94,6 +94,10 @@ public class TransactionsFragment extends Fragment {
                 } else if(tab.getText().equals("Daily")) {
                     Constants.SELECTED_TAB = 0;
                     updateDate();
+                }else if (tab.getText().equals("Summary")) {
+                    Constants.SELECTED_TAB = 3;
+                    updateDate();
+
                 }
             }
 
@@ -119,7 +123,7 @@ public class TransactionsFragment extends Fragment {
             public void onChanged(RealmResults<Transaction> transactions) {
                 TransactionsAdapter transactionsAdapter = new TransactionsAdapter(getActivity(), transactions);
                 binding.transactionsList.setAdapter(transactionsAdapter);
-                if(transactions.size() > 0) {
+                if(!transactions.isEmpty()) {
                     binding.emptyState.setVisibility(View.GONE);
                 } else {
                     binding.emptyState.setVisibility(View.VISIBLE);
@@ -157,6 +161,8 @@ public class TransactionsFragment extends Fragment {
         if(Constants.SELECTED_TAB == Constants.DAILY) {
             binding.currentDate.setText(Helper.formatDate(calendar.getTime()));
         } else if(Constants.SELECTED_TAB == Constants.MONTHLY) {
+            binding.currentDate.setText(Helper.formatDateByMonth(calendar.getTime()));
+        } else if (Constants.SELECTED_TAB == Constants.SUMMARY) {
             binding.currentDate.setText(Helper.formatDateByMonth(calendar.getTime()));
         }
         viewModel.getTransactions(calendar);

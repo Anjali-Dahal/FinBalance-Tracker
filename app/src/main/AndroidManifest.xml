@@ -13,6 +13,15 @@
         android:theme="@style/Base.Theme.FinBalance"
         tools:targetApi="31">
         <activity
+            android:name=".views.activites.SummaryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activites.PasswordReset"
+            android:exported="false" />
+        <activity
+            android:name=".views.activites.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activites.RegistrationActivity"
             android:exported="false" />
         <activity
@@ -27,7 +36,6 @@
         <activity
             android:name=".views.activites.MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

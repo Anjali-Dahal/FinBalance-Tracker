@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import anjali.example.finbanlacetracker.R;
@@ -23,7 +24,7 @@ import anjali.example.finbanlacetracker.viewmodels.MainViewModel;
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     MainViewModel viewModel;
-    TextView sign_up_btn;
+    TextView sign_up_btn, forget_pwd;
     Button btn_login;
 
     @Override
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         sign_up_btn = binding.signupReg;
 
         btn_login = binding.btnLogin;
+        forget_pwd = binding.forgetPwd;
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     if (user.getPassword().equals(password)) {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("user", user);
                         startActivity(intent);
                         finish();
                     }else {
@@ -62,13 +65,17 @@ public class LoginActivity extends AppCompatActivity {
         sign_up_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Login Activity", "Registration Button Clicked");
-
-                //TODO: Switch To The Registration Activity
                 Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent);
             }
         });
 
+        forget_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, PasswordReset.class);
+                startActivity(intent);
+            }
+        });
     }
 }

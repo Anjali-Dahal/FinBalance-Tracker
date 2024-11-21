@@ -3,27 +3,17 @@ package anjali.example.finbanlacetracker.views.activites;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 
 import com.google.android.material.navigation.NavigationBarView;
@@ -33,22 +23,18 @@ import java.util.Calendar;
 
 import anjali.example.finbanlacetracker.R;
 import anjali.example.finbanlacetracker.databinding.ActivityMainBinding;
-import anjali.example.finbanlacetracker.databinding.FragmentTransactionsBinding;
-import anjali.example.finbanlacetracker.models.Transaction;
+import anjali.example.finbanlacetracker.models.User;
 import anjali.example.finbanlacetracker.utils.Constants;
-import anjali.example.finbanlacetracker.utils.Helper;
 import anjali.example.finbanlacetracker.viewmodels.MainViewModel;
 import anjali.example.finbanlacetracker.views.fragments.SearchResultFragment;
 import anjali.example.finbanlacetracker.views.fragments.StatsFragment;
 import anjali.example.finbanlacetracker.views.fragments.TransactionsFragment;
-import io.realm.RealmResults;
-
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     Calendar calendar;
+    User user;
+
     /*
     0 = Daily
     1 = Monthly
@@ -76,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.content, new TransactionsFragment());
         transaction.commit();
 
+        user = getIntent().getParcelableExtra("user");
+
         binding.bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -85,6 +73,16 @@ public class MainActivity extends AppCompatActivity {
                 } else if(item.getItemId() == R.id.stats){
                     transaction.replace(R.id.content, new StatsFragment());
                     transaction.addToBackStack(null);
+                }else if (item.getItemId() == R.id.profile) {
+                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    intent.putExtra("user", user);
+                    startActivity(intent);
+                    finish();
+                }else if (item.getItemId() == R.id.summary) {
+                    Intent intent = new Intent(MainActivity.this, SummaryActivity.class);
+                    intent.putExtra("user", user);
+                    startActivity(intent);
+                    finish();
                 }
                 transaction.commit();
                 return true;

@@ -42,6 +42,7 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
         super.onCreate(savedInstanceState);
 
     }
+
     FragmentAddTransactionBinding binding;
     Transaction transaction;
 

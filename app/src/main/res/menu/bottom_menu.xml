@@ -10,12 +10,14 @@
         android:id="@+id/stats"
         android:icon="@drawable/ic_chart"
         android:title="Stats" />
+
     <item
-        android:id="@+id/accounts"
-        android:icon="@drawable/ic_accounts"
-        android:title="Accounts" />
+        android:id="@+id/summary"
+        android:icon="@drawable/clipboard_list_svgrepo_com"
+        android:title="Summary" />
+
     <item
-        android:id="@+id/more"
-        android:icon="@drawable/ic_more"
-        android:title="More" />
+        android:id="@+id/profile"
+        android:icon="@drawable/profile"
+        android:title="Profile" />
 </menu>

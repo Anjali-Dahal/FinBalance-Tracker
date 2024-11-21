@@ -44,6 +44,7 @@
                 android:layout_margin="10dp"
                 android:text="Login"
                 android:id="@+id/btn_login"
+                android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <TextView
